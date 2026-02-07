@@ -1,5 +1,5 @@
 import os
-from fastapi import FastAPI, UploadFile, File
+from fastapi import FastAPI, UploadFile, File, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 import uvicorn
 import tensorflow as tf
@@ -24,7 +24,8 @@ app.add_middleware(
 )
 
 # Load the model
-MODEL_PATH = os.path.join(os.path.dirname(__file__), "model", "plant_disease_mobilenetv2 .h5")
+MODEL_PATH = os.path.join(os.path.dirname(__file__), "model", "plant_disease_mobilenetv2.h5")
+model = None
 try:
     model = tf.keras.models.load_model(MODEL_PATH)
     logger.info(f"Model loaded successfully from {MODEL_PATH}")
@@ -82,6 +83,9 @@ async def root():
 
 @app.post("/predict")
 async def predict(file: UploadFile = File(...)):
+    if model is None:
+        raise HTTPException(status_code=503, detail="Model failed to load. Please check server logs.")
+    
     # Read image
     content = await file.read()
     image = Image.open(io.BytesIO(content)).convert('RGB')
@@ -208,4 +212,5 @@ def map_to_disease_id(class_name: str):
     return mapping.get(class_name, "unknown")
 
 if __name__ == "__main__":
-    uvicorn.run(app, host="0.0.0.0", port=8000)
+    port = int(os.environ.get("PORT", 8000))
+    uvicorn.run(app, host="0.0.0.0", port=port)

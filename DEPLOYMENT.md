@@ -21,7 +21,7 @@ This app consists of two parts that need to be deployed separately:
    - **Root Directory**: `ai` (Important! This tells Render the app is in the ai folder)
    - **Runtime**: `Python 3`
    - **Build Command**: `pip install -r requirements.txt`
-   - **Start Command**: `gunicorn -k uvicorn.workers.UvicornWorker app:app`
+   - **Start Command**: `python app.py`
    - **Instance Type**: Free
 6. Click **Create Web Service**.
 7. Wait ~5 minutes for it to build and deploy.
