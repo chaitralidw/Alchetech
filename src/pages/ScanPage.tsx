@@ -51,7 +51,9 @@ export default function ScanPage() {
       formData.append("file", blob, "image.jpg");
 
       // Send to AI Model Server
-      const apiUrl = import.meta.env.VITE_API_URL || "http://localhost:8000";
+      const envApiUrl = import.meta.env.VITE_API_URL || "http://localhost:8000";
+      const apiUrl = envApiUrl.replace(/\/$/, ""); // Remove trailing slash if present
+      
       const apiResponse = await fetch(`${apiUrl}/predict`, {
         method: "POST",
         body: formData,
