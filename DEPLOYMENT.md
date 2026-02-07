@@ -21,9 +21,11 @@ This app consists of two parts that need to be deployed separately:
    - **Root Directory**: `ai` (Important! This tells Render the app is in the ai folder)
    - **Runtime**: `Python 3`
    - **Build Command**: `pip install -r requirements.txt`
-   - **Start Command**: `python app.py`
+   - **Start Command**: `python app.py` (Do NOT use gunicorn, it may cause 502 errors on Free Tier)
    - **Instance Type**: Free
 6. Click **Create Web Service**.
+
+> **Note**: If you see a **502 Bad Gateway**, ensure your Start Command is exactly `python app.py`. Gunicorn often times out with TensorFlow on the free plan.
 7. Wait ~5 minutes for it to build and deploy.
 8. Once live, copy the URL (e.g., `https://cropguard-api.onrender.com`).
 

@@ -23,14 +23,21 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Load the model
+# Model will be loaded lazily
 MODEL_PATH = os.path.join(os.path.dirname(__file__), "model", "plant_disease_mobilenetv2.h5")
 model = None
-try:
-    model = tf.keras.models.load_model(MODEL_PATH)
-    logger.info(f"Model loaded successfully from {MODEL_PATH}")
-except Exception as e:
-    logger.error(f"Failed to load model: {e}")
+
+def get_model():
+    global model
+    if model is None:
+        try:
+            logger.info(f"Loading model from {MODEL_PATH}...")
+            model = tf.keras.models.load_model(MODEL_PATH)
+            logger.info("Model loaded successfully.")
+        except Exception as e:
+            logger.error(f"Failed to load model: {e}")
+            raise e
+    return model
 
 # Define class names
 CLASS_NAMES = [
@@ -83,7 +90,9 @@ async def root():
 
 @app.post("/predict")
 async def predict(file: UploadFile = File(...)):
-    if model is None:
+    try:
+        model = get_model()
+    except Exception as e:
         raise HTTPException(status_code=503, detail="Model failed to load. Please check server logs.")
     
     # Read image
