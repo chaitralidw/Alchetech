@@ -14,16 +14,11 @@ logger = logging.getLogger("CropGuard-AI")
 
 app = FastAPI()
 
-# Enable CORS for frontend
+# Enable CORS for frontend (Permissive for public API)
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[
-        "https://farmscan-gray.vercel.app",
-        "https://farmscan-gray.vercel.app/",
-        "http://localhost:5173",
-        "http://localhost:8000"
-    ],
-    allow_credentials=True,
+    allow_origins=["*"],  # Allow ALL origins
+    allow_credentials=False, # No cookies needed for this API
     allow_methods=["*"],
     allow_headers=["*"],
 )
@@ -80,7 +75,10 @@ CLASS_NAMES = [
 
 @app.get("/")
 async def root():
-    return {"message": "CropGuard AI Model Server is running"}
+    return {
+        "message": "CropGuard AI Model Server is running",
+        "version": "1.2.0 (Center Crop + Permissive CORS)"
+    }
 
 @app.post("/predict")
 async def predict(file: UploadFile = File(...)):
