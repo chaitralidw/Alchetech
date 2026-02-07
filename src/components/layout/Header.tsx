@@ -18,13 +18,18 @@ export function Header() {
 
   return (
     <header className="sticky top-0 z-40 bg-card/95 backdrop-blur-lg border-b border-border">
-      <div className="flex items-center justify-between px-4 py-3 max-w-lg mx-auto">
-        <div className="flex items-center gap-2 cursor-pointer" onClick={() => navigate("/")}>
+      <div className="flex items-center justify-between px-4 py-3 lg:px-8 max-w-full lg:max-w-none">
+        <div
+          className="flex items-center gap-2 cursor-pointer"
+          onClick={() => navigate("/")}
+        >
           <div className="w-10 h-10 rounded-full bg-primary flex items-center justify-center">
             <Leaf className="w-5 h-5 text-primary-foreground" />
           </div>
           <div>
-            <h1 className="text-lg font-black text-foreground tracking-tight">FarmScan</h1>
+            <h1 className="text-lg font-black text-foreground tracking-tight">
+              FarmScan
+            </h1>
             <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest leading-none">
               AI Intelligence
             </p>
@@ -33,7 +38,7 @@ export function Header() {
 
         <div className="flex items-center gap-2">
           <ReadAloudButton />
-          
+
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button
@@ -98,7 +103,10 @@ function UserMenu() {
           Profile
         </DropdownMenuItem>
         <DropdownMenuSeparator />
-        <DropdownMenuItem onClick={() => signOut()} className="text-destructive">
+        <DropdownMenuItem
+          onClick={() => signOut()}
+          className="text-destructive"
+        >
           <LogOut className="w-4 h-4 mr-2" />
           Sign Out
         </DropdownMenuItem>
@@ -106,4 +114,3 @@ function UserMenu() {
     </DropdownMenu>
   );
 }
-

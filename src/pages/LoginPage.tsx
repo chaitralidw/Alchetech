@@ -45,7 +45,7 @@ export default function LoginPage() {
 
   return (
     <Layout>
-      <div className="px-4 py-6 space-y-6 max-w-md mx-auto">
+      <div className="px-4 py-6 space-y-6 max-w-md md:max-w-lg mx-auto pb-32 md:px-6 lg:px-8">
         <div className="text-center space-y-2">
           <h1 className="text-3xl font-bold text-foreground">
             Welcome to FarmScan

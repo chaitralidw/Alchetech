@@ -1,21 +1,21 @@
-import { Home, Camera, Clock, BookOpen, Bell } from 'lucide-react';
-import { NavLink } from 'react-router-dom';
-import { useLanguage } from '@/contexts/LanguageContext';
-import { cn } from '@/lib/utils';
+import { Home, Camera, Clock, BookOpen, Bell } from "lucide-react";
+import { NavLink } from "react-router-dom";
+import { useLanguage } from "@/contexts/LanguageContext";
+import { cn } from "@/lib/utils";
 
 const navItems = [
-  { to: '/', icon: Home, labelKey: 'nav.home' },
-  { to: '/history', icon: Clock, labelKey: 'nav.history' },
-  { to: '/scan', icon: Camera, labelKey: 'nav.scan', isMain: true },
-  { to: '/diseases', icon: BookOpen, labelKey: 'nav.diseases' },
+  { to: "/", icon: Home, labelKey: "nav.home" },
+  { to: "/history", icon: Clock, labelKey: "nav.history" },
+  { to: "/scan", icon: Camera, labelKey: "nav.scan", isMain: true },
+  { to: "/diseases", icon: BookOpen, labelKey: "nav.diseases" },
 ];
 
 export function BottomNav() {
   const { t } = useLanguage();
 
   return (
-    <nav className="fixed bottom-6 left-4 right-4 z-50 glass rounded-2xl shadow-2xl border border-white/20 max-w-lg mx-auto overflow-hidden">
-      <div className="flex items-center justify-around px-2 py-3">
+    <nav className="fixed bottom-6 left-4 right-4 z-50 glass rounded-2xl shadow-2xl border border-white/20 max-w-lg md:max-w-xl lg:max-w-2xl mx-auto overflow-hidden md:bottom-8 lg:bottom-10">
+      <div className="flex items-center justify-around px-2 py-3 md:px-4 md:py-4">
         {navItems.map((item) => (
           <NavLink
             key={item.to}
@@ -26,8 +26,8 @@ export function BottomNav() {
                 item.isMain
                   ? "scale-110"
                   : isActive
-                  ? "text-primary scale-105"
-                  : "text-muted-foreground hover:text-foreground hover:scale-105"
+                    ? "text-primary scale-105"
+                    : "text-muted-foreground hover:text-foreground hover:scale-105",
               )
             }
           >
@@ -39,16 +39,27 @@ export function BottomNav() {
                   </div>
                 ) : (
                   <div className="relative">
-                    <item.icon className={cn("w-5 h-5 transition-transform", isActive && "stroke-[2.5px]")} />
+                    <item.icon
+                      className={cn(
+                        "w-5 h-5 transition-transform",
+                        isActive && "stroke-[2.5px]",
+                      )}
+                    />
                     {isActive && (
                       <span className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-1 h-1 rounded-full bg-primary animate-pulse" />
                     )}
                   </div>
                 )}
-                <span className={cn(
-                  "text-[10px] font-bold uppercase tracking-wider transition-opacity",
-                  item.isMain ? "hidden" : isActive ? "opacity-100" : "opacity-60"
-                )}>
+                <span
+                  className={cn(
+                    "text-[10px] font-bold uppercase tracking-wider transition-opacity",
+                    item.isMain
+                      ? "hidden"
+                      : isActive
+                        ? "opacity-100"
+                        : "opacity-60",
+                  )}
+                >
                   {t(item.labelKey)}
                 </span>
               </>

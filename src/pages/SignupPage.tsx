@@ -58,7 +58,7 @@ export default function SignupPage() {
   if (success) {
     return (
       <Layout>
-        <div className="px-4 py-6 space-y-6 max-w-md mx-auto">
+        <div className="px-4 py-6 space-y-6 max-w-md md:max-w-lg mx-auto pb-32 md:px-6 lg:px-8">
           <Card className="p-6 text-center space-y-4">
             <div className="text-4xl">✅</div>
             <h2 className="text-2xl font-bold">Account Created!</h2>
@@ -73,7 +73,7 @@ export default function SignupPage() {
 
   return (
     <Layout>
-      <div className="px-4 py-6 space-y-6 max-w-md mx-auto">
+      <div className="px-4 py-6 space-y-6 max-w-md md:max-w-lg mx-auto pb-32 md:px-6 lg:px-8">
         <div className="text-center space-y-2">
           <h1 className="text-3xl font-bold text-foreground">Create Account</h1>
           <p className="text-muted-foreground">
