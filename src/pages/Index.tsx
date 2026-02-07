@@ -49,12 +49,13 @@ const Index = () => {
 
         if (data) {
           const dbScans = data as DbScan[];
-          
+
           // Map to ScanResult type
-          const mappedScans: ScanResult[] = dbScans.map(s => {
+          const mappedScans: ScanResult[] = dbScans.map((s) => {
             const diseaseId = s.disease_id || "";
-            const foundDisease = diseases.find(d => d.id === diseaseId) || null;
-            const fallbackCrop = diseaseId.split('-')[0] || 'unknown';
+            const foundDisease =
+              diseases.find((d) => d.id === diseaseId) || null;
+            const fallbackCrop = diseaseId.split("-")[0] || "unknown";
 
             return {
               id: s.id,
@@ -71,7 +72,7 @@ const Index = () => {
 
           // Calc stats
           const total = dbScans.length;
-          const healthy = dbScans.filter(s => s.is_healthy).length;
+          const healthy = dbScans.filter((s) => s.is_healthy).length;
           setStats({
             total,
             healthy,
@@ -90,7 +91,7 @@ const Index = () => {
 
   return (
     <Layout>
-      <div className="px-4 py-8 space-y-8 max-w-lg mx-auto pb-32">
+      <div className="px-4 py-8 space-y-8 max-w-lg md:max-w-3xl lg:max-w-5xl mx-auto pb-32 md:px-6 lg:px-8">
         {/* Hero Section with Banner */}
         <div className="relative rounded-[2.5rem] overflow-hidden shadow-2xl group">
           <img
@@ -131,13 +132,16 @@ const Index = () => {
             </h2>
           </div>
           {loading ? (
-            <div className="grid grid-cols-3 gap-4">
-              {[1, 2, 3].map(i => (
-                <div key={i} className="h-32 bg-muted/30 rounded-[2rem] animate-pulse" />
+            <div className="grid grid-cols-3 md:grid-cols-3 lg:grid-cols-3 gap-4">
+              {[1, 2, 3].map((i) => (
+                <div
+                  key={i}
+                  className="h-32 bg-muted/30 rounded-[2rem] animate-pulse"
+                />
               ))}
             </div>
           ) : (
-            <div className="grid grid-cols-3 gap-4">
+            <div className="grid grid-cols-3 md:grid-cols-3 lg:grid-cols-3 gap-4">
               <StatCard
                 icon={<ScanIcon className="w-6 h-6 text-primary" />}
                 label={t("home.totalScans")}
@@ -166,19 +170,22 @@ const Index = () => {
             <h2 className="text-lg font-semibold text-foreground">
               {t("home.recentScans")}
             </h2>
-            <Button 
-              variant="link" 
-              className="text-primary p-0 h-auto" 
+            <Button
+              variant="link"
+              className="text-primary p-0 h-auto"
               onClick={() => navigate("/history")}
             >
               See All
             </Button>
           </div>
-          
-          <div className="space-y-3">
+
+          <div className="space-y-3 md:grid md:grid-cols-2 lg:grid-cols-3 md:gap-4">
             {loading ? (
-              [1, 2, 3].map(i => (
-                <div key={i} className="h-20 bg-muted/50 animate-pulse rounded-xl" />
+              [1, 2, 3].map((i) => (
+                <div
+                  key={i}
+                  className="h-20 bg-muted/50 animate-pulse rounded-xl"
+                />
               ))
             ) : scans.length > 0 ? (
               scans.map((scan) => (
@@ -191,9 +198,9 @@ const Index = () => {
             ) : (
               <div className="text-center py-10 bg-muted/20 rounded-2xl border border-dashed border-border">
                 <p className="text-muted-foreground text-sm">No scans yet</p>
-                <Button 
-                  variant="outline" 
-                  size="sm" 
+                <Button
+                  variant="outline"
+                  size="sm"
                   className="mt-2"
                   onClick={() => navigate("/scan")}
                 >

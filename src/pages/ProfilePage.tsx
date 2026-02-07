@@ -6,7 +6,15 @@ import { Switch } from "@/components/ui/switch";
 import { useAuth } from "@/contexts/AuthContext";
 import { useLanguage, availableLanguages } from "@/contexts/LanguageContext";
 import { Layout } from "@/components/layout/Layout";
-import { ArrowLeft, LogOut, Bell, Moon, Copy, Check, Loader2 } from "lucide-react";
+import {
+  ArrowLeft,
+  LogOut,
+  Bell,
+  Moon,
+  Copy,
+  Check,
+  Loader2,
+} from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { Tables } from "@/integrations/supabase/types";
 
@@ -48,9 +56,14 @@ export default function ProfilePage() {
           const total = scans.length;
           const healthy = scans.filter((s) => s.is_healthy).length;
           const diseases = total - healthy;
-          const avgConf = total > 0 
-            ? Math.round((scans.reduce((acc, s) => acc + (s.confidence || 0), 0) / total) * 100)
-            : 0;
+          const avgConf =
+            total > 0
+              ? Math.round(
+                  (scans.reduce((acc, s) => acc + (s.confidence || 0), 0) /
+                    total) *
+                    100,
+                )
+              : 0;
 
           setStats({
             totalScans: total,
@@ -69,7 +82,6 @@ export default function ProfilePage() {
 
         if (profileError) throw profileError;
         if (profileData) setProfile(profileData);
-
       } catch (err) {
         console.error("Error fetching data:", err);
       } finally {
@@ -112,14 +124,14 @@ export default function ProfilePage() {
 
   return (
     <Layout>
-      <div className="px-4 py-6 space-y-6 max-w-lg mx-auto">
+      <div className="px-4 py-6 space-y-6 max-w-lg md:max-w-3xl lg:max-w-4xl mx-auto pb-32 md:px-6 lg:px-8">
         {/* Header */}
         <div className="flex items-center gap-3">
           <Button variant="ghost" size="icon" onClick={() => navigate(-1)}>
             <ArrowLeft className="w-5 h-5" />
           </Button>
           <h1 className="text-xl font-bold text-foreground">
-            {t('profile.title')}
+            {t("profile.title")}
           </h1>
         </div>
 
@@ -152,7 +164,7 @@ export default function ProfilePage() {
               Active Since
             </label>
             <p className="text-sm font-bold">
-              {profile?.created_at 
+              {profile?.created_at
                 ? new Date(profile.created_at).toLocaleDateString("en-US", {
                     year: "numeric",
                     month: "long",
@@ -188,31 +200,45 @@ export default function ProfilePage() {
 
         {/* Scan Statistics */}
         <Card className="p-6 space-y-4">
-          <h2 className="font-bold text-lg">{t('profile.stats')}</h2>
+          <h2 className="font-bold text-lg">{t("profile.stats")}</h2>
           {statsLoading ? (
             <div className="flex justify-center py-8">
               <Loader2 className="w-6 h-6 animate-spin text-primary" />
             </div>
           ) : (
             <>
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                 <div className="text-center p-4 bg-muted rounded-lg border border-border/50">
-                  <p className="text-3xl font-bold text-primary">{stats.totalScans}</p>
-                  <p className="text-sm text-muted-foreground">{t('home.totalScans')}</p>
+                  <p className="text-3xl font-bold text-primary">
+                    {stats.totalScans}
+                  </p>
+                  <p className="text-sm text-muted-foreground">
+                    {t("home.totalScans")}
+                  </p>
                 </div>
                 <div className="text-center p-4 bg-muted rounded-lg border border-border/50">
-                  <p className="text-3xl font-bold text-success">{stats.healthyPlants}</p>
-                  <p className="text-sm text-muted-foreground">{t('home.healthyPlants')}</p>
-                </div>
-              </div>
-              <div className="grid grid-cols-2 gap-4 pt-2">
-                <div className="text-center p-4 bg-muted rounded-lg border border-border/50">
-                  <p className="text-3xl font-bold text-warning">{stats.diseasesFound}</p>
-                  <p className="text-sm text-muted-foreground">{t('home.diseasesFound')}</p>
+                  <p className="text-3xl font-bold text-success">
+                    {stats.healthyPlants}
+                  </p>
+                  <p className="text-sm text-muted-foreground">
+                    {t("home.healthyPlants")}
+                  </p>
                 </div>
                 <div className="text-center p-4 bg-muted rounded-lg border border-border/50">
-                  <p className="text-3xl font-bold text-accent">{stats.avgConfidence}%</p>
-                  <p className="text-sm text-muted-foreground">{t('result.confidence')}</p>
+                  <p className="text-3xl font-bold text-warning">
+                    {stats.diseasesFound}
+                  </p>
+                  <p className="text-sm text-muted-foreground">
+                    {t("home.diseasesFound")}
+                  </p>
+                </div>
+                <div className="text-center p-4 bg-muted rounded-lg border border-border/50">
+                  <p className="text-3xl font-bold text-accent">
+                    {stats.avgConfidence}%
+                  </p>
+                  <p className="text-sm text-muted-foreground">
+                    {t("result.confidence")}
+                  </p>
                 </div>
               </div>
             </>
@@ -221,14 +247,16 @@ export default function ProfilePage() {
 
         {/* Settings */}
         <Card className="p-6 space-y-4">
-          <h2 className="font-bold text-lg">{t('profile.settings')}</h2>
+          <h2 className="font-bold text-lg">{t("profile.settings")}</h2>
 
           {/* Notifications */}
           <div className="flex items-center justify-between pb-3 border-b border-border">
             <div className="flex items-center gap-3">
               <Bell className="w-5 h-5 text-primary" />
               <div>
-                <p className="text-sm font-medium">{t('profile.notifications')}</p>
+                <p className="text-sm font-medium">
+                  {t("profile.notifications")}
+                </p>
                 <p className="text-xs text-muted-foreground">
                   Get alerts for disease detection
                 </p>
@@ -247,7 +275,10 @@ export default function ProfilePage() {
               <p className="text-xs text-muted-foreground">
                 Current:{" "}
                 {(() => {
-                  return availableLanguages.find(l => l.code === language)?.label || language;
+                  return (
+                    availableLanguages.find((l) => l.code === language)
+                      ?.label || language
+                  );
                 })()}
               </p>
             </div>
@@ -277,7 +308,7 @@ export default function ProfilePage() {
             <div className="flex items-center gap-3">
               <Moon className="w-5 h-5 text-primary" />
               <div>
-                <p className="text-sm font-medium">{t('profile.darkMode')}</p>
+                <p className="text-sm font-medium">{t("profile.darkMode")}</p>
                 <p className="text-xs text-muted-foreground">Coming soon</p>
               </div>
             </div>
@@ -293,7 +324,7 @@ export default function ProfilePage() {
           variant="destructive"
         >
           <LogOut className="w-4 h-4" />
-          {loading ? "Resetting..." : t('profile.reset')}
+          {loading ? "Resetting..." : t("profile.reset")}
         </Button>
       </div>
     </Layout>
